@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:20:46 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/22 15:50:26 by ancarlos         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:17:04 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdbool.h>
+# include "get_next_line.h"
 #define TRUE 1;
 #define FALSE 0;
 
@@ -53,6 +54,8 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t size);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
+
+/*PRINTF*/
 int		perc_xupper(unsigned long nb);
 int		perc_x(unsigned long nb);
 int		perc_u(unsigned int nb);
@@ -60,11 +63,12 @@ int		perc_s(char *s);
 int		perc_p(void	*p);
 int		perc_d(int nb);
 int		perc_c(int c);
-int		ft_printf(const char *print, ...);
+
+
+int		ft_printf(const char *print, ...); 
 int	    my_free_matrix(char **matrix);
 char	*my_strndup(const char *s, size_t n);
 int     my_strcmp(char *s1, char *s2);
-
 
 
 #endif

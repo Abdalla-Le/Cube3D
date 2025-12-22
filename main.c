@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/22 15:37:04 by ancarlos         ###   ########.fr       */
+/*   Updated: 2025/12/22 17:07:15 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int main (int ac, char **av)
 {
-	if (!stdin_parse(av[1]) || ac != 2)
+	int	fd;
+	
+	if (!(fd = stdin_parse(av[1])) || ac != 2 || !parse_map(fd))
 		return (1);
+	
+	
 }
