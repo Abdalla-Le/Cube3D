@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   my_free_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/22 13:03:52 by ancarlos         ###   ########.fr       */
+/*   Created: 2025/07/29 21:26:27 by ancarlos          #+#    #+#             */
+/*   Updated: 2025/08/07 15:35:32 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include "libft.h"
 
-int main (int ac, char **av)
+int	my_free_matrix(char **matrix)
 {
-    
+    int i;
+
+    i = 0;
+	while (matrix[i])
+    {
+		free(matrix[i]);
+        i++;
+    }
+	free(matrix);
+    return (1);
 }

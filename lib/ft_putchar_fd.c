@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/22 13:03:52 by ancarlos         ###   ########.fr       */
+/*   Created: 2024/10/07 17:33:42 by ancarlos          #+#    #+#             */
+/*   Updated: 2024/10/07 17:43:05 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include <unistd.h>
 
-int main (int ac, char **av)
+void	ft_putchar_fd(char c, int fd)
 {
-    
+	write(fd, &c, 1);
 }
+
+/*int main()
+{
+	ft_putchar_fd('c', 9);
+	return 0;
+}*/

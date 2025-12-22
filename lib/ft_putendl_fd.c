@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/22 13:03:52 by ancarlos         ###   ########.fr       */
+/*   Created: 2024/10/07 17:49:06 by ancarlos          #+#    #+#             */
+/*   Updated: 2024/10/15 16:14:14 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parse.h"
+#include <unistd.h>
 
-int main (int ac, char **av)
+void	ft_putendl_fd(char *s, int fd)
 {
-    
+	while (*s)
+		write(fd, s++, 1);
+	write(fd, "\n", 1);
 }
+/*int main()
+{
+	char *s1 = "joao empadas";
+	ft_putendl_fd(s1, 1);
+	return 0;
+}*/
