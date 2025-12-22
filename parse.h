@@ -3,7 +3,9 @@
 */
 
 #include "lib/libft.h"
-
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 /*
     structs
 */
@@ -24,3 +26,8 @@ typedef struct s_map {
     int     floor_color; // Cor do chão (convertido pra int/hex)
     int     ceil_color;  // Cor do teto (convertido pra int/hex)
 } t_map;
+
+/*
+    Functions
+*/
+int stdin_parse(char *file_name);

@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:05:04 by ancarlos          #+#    #+#             */
-/*   Updated: 2024/10/17 12:25:35 by ancarlos         ###   ########.fr       */
+/*   Updated: 2025/12/22 16:00:46 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strchr(const char *s1, int c)
 	}
 	if ((char) c == '\0')
 		return ((char *)s1);
-	return (0);
+	return (NULL);
 }
 /* #include <stdio.h>
 #include <string.h>
