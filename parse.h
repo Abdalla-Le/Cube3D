@@ -31,4 +31,4 @@ typedef struct s_map {
     Functions
 */
 int stdin_parse(char *file_name);
-int parse_map(int fd);
+int parse_file(int fd, t_map map);
