@@ -9,7 +9,7 @@ LIB_DIR     = lib
 LIBFT       = $(LIB_DIR)/libft.a
 
 # Fontes que aparecem na sua imagem
-SRCS        = main.c stdin_parse.c parse_map.c
+SRCS        = main.c stdin_parse.c parse_map.c parse_file.c path_way.c lst_moves.c 
 OBJS        = $(SRCS:.c=.o)
 
 # Removi a parte do Parse que não existe como pasta na imagem

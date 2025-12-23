@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/23 18:06:39 by ancarlos         ###   ########.fr       */
+/*   Created: 2025/12/22 17:06:09 by ancarlos          #+#    #+#             */
+/*   Updated: 2025/12/23 18:41:29 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-static void fill_list(t_gnl *lst, char *line)
+int parse_file(int fd, t_map file, t_gnl *lst)
 {
-	ft_lstadd_back(&lst,ft_lstnew(ft_strdup(line)));
-}
-
-int parse_map(int fd, t_map file, char *line, t_gnl *lst)
-{
-	(void)fd;
-	(void)file;
-	fill_list(lst, line);
+	char	*line;
+	
+	while ((line = get_next_line(fd)) != NULL)
+    {
+		if (line[0] >= 65 && line[0] <= 90)
+			path_way(fd, &file, line);
+		if (line[0] >= '0' && line[0] <= '9')
+			parse_map(fd, file, line, lst);
+		free(line);
+	}
 	return 1;
-}
+}	

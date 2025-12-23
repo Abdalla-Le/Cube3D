@@ -1,26 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   lst_moves.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/23 18:06:39 by ancarlos         ###   ########.fr       */
+/*   Created: 2025/12/23 16:56:14 by ancarlos          #+#    #+#             */
+/*   Updated: 2025/12/23 16:56:15 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-static void fill_list(t_gnl *lst, char *line)
+
+void ft_lstadd_back(t_gnl **lst, t_gnl*new)
 {
-	ft_lstadd_back(&lst,ft_lstnew(ft_strdup(line)));
+	t_gnl	*temp;
+
+	if(!lst || !new)
+		return ;
+	if(*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }
 
-int parse_map(int fd, t_map file, char *line, t_gnl *lst)
+t_gnl *ft_lstnew(char *content)
 {
-	(void)fd;
-	(void)file;
-	fill_list(lst, line);
-	return 1;
+	t_gnl	*node;
+
+	node = malloc(sizeof(t_gnl));
+	if(!node)
+		return (NULL);
+	node->line = content;
+	node->next = NULL;
+	return (node);
 }
