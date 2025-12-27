@@ -39,10 +39,10 @@ typedef struct s_gnl
     Functions
 */
 int		stdin_parse(char *file_name);
-int		parse_file(int fd, t_map map, t_gnl *lst);
+int		parse_file(int fd, t_map *map, t_gnl **lst);
 void	ft_lstadd_back(t_gnl **lst, t_gnl*new);
 t_gnl	*ft_lstnew(char *content);
 int		path_way(int fd, t_map *file, char *line);
-int		parse_map(int fd, t_map file, char *line, t_gnl *lst);
+int		parse_map(int fd, t_map *file, char *line, t_gnl **lst);
 
 

@@ -6,29 +6,36 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/23 18:48:25 by ancarlos         ###   ########.fr       */
+/*   Updated: 2025/12/27 16:44:08 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
+void print_teste(t_map *file)
+{
+	printf("%s\n%s\n%s\n%s",file->ea_path, file->no_path, file->we_path, file->so_path);
+}
+
 int main (int ac, char **av)
 {
 	int	fd;
-	t_map	map;
-	t_gnl	*lst;
+	t_map	*file;
+	t_gnl	*map;
 
-	lst = NULL;
+	map = NULL;
 	if (!(fd = stdin_parse(av[1])) || ac != 2)
 		return (1);
-	parse_file(fd, map, lst);
-	while (lst != NULL)
+	file = malloc(sizeof(t_map));
+	parse_file(fd, file, &map);
+	print_teste(file);
+	while (map != NULL)
     {
         // Supondo que o 'content' seja uma string (char *)
-        printf("Conteúdo: %s\n", lst->line);
+        printf("Conteúdo: %s", map->line);
         
         // Move para o próximo nó
-        lst = lst->next;
+        map = map->next;
     }
 	
 }
