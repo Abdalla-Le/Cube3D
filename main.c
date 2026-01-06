@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/27 16:44:08 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:28:00 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,9 @@ int main (int ac, char **av)
 	print_teste(file);
 	while (map != NULL)
     {
-        // Supondo que o 'content' seja uma string (char *)
         printf("Conteúdo: %s", map->line);
-        
-        // Move para o próximo nó
+
         map = map->next;
     }
-	
+
 }

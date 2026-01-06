@@ -15,6 +15,9 @@
 static int	find_color(char *line, t_map *file)
 {
 	(void)line;
+	int	i;
+
+	i = 0;
 	if (line[0] == 'C' || line[0] == 'F')
 	{
 		if (line[0] == 'C')

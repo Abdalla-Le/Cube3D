@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:06:09 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/06 13:54:31 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:08:22 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ int parse_file(int fd, t_map *file, t_gnl **lst)
 		i = 0;
 		free(line);
 	}
-	return 1;
+	return (1);
 }
