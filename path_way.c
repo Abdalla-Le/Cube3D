@@ -25,18 +25,23 @@ static int	find_color(char *line, t_map *file)
 	}
 	return (0);
 }
- 
+
 static int	find_way(char *line, t_map *file)
 {
-	if (line[0] == 'E' || line[0] == 'W' || line[0] == 'S' || line[0] == 'N' )
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == 'E' || line[i] == 'W' || line[i] == 'S' || line[i] == 'N' )
 	{
-		if (line[0] == 'E')
+		if (line[i] == 'E')
 			file->ea_path = ft_strdup(line);
-		if (line[0] == 'W')
+		if (line[i] == 'W')
 			file->we_path = ft_strdup(line);
-		if (line[0] == 'S')
+		if (line[i] == 'S')
 			file->so_path = ft_strdup(line);
-		if (line[0] == 'N')
+		if (line[i] == 'N')
 			file->no_path = ft_strdup(line);
 		return (1);
 	}
@@ -46,10 +51,10 @@ static int	find_way(char *line, t_map *file)
 int	path_way(int fd, t_map *file, char *line)
 {
 	(void)fd;
-	if (line[0] >= 65 && line[0] <= 90)
+	if ((line[0] >= 65 && line[0] <= 90) || line[0] == ' ')
 	{
 		if (!find_color(line, file) && !find_way(line, file))
 			return 0;
 	}
-    return (1);
+	return (1);
 }
