@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:56:14 by ancarlos          #+#    #+#             */
-/*   Updated: 2025/12/23 16:56:15 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:11:14 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void ft_lstadd_back(t_gnl **lst, t_gnl*new)
 	temp->next = new;
 }
 
-t_gnl *ft_lstnew(char *content)
+t_gnl *ft_lstnew(char *content, int i)
 {
 	t_gnl	*node;
 
@@ -38,6 +38,7 @@ t_gnl *ft_lstnew(char *content)
 	if(!node)
 		return (NULL);
 	node->line = content;
+	node->index = i;
 	node->next = NULL;
 	return (node);
 }
