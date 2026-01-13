@@ -18,9 +18,11 @@ static int	find_color(char *line, t_map *file)
 	int	i;
 
 	i = 0;
-	if (line[0] == 'C' || line[0] == 'F')
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] == 'C' || line[i] == 'F')
 	{
-		if (line[0] == 'C')
+		if (line[i] == 'C')
 			file->ceil_color = 3;//ft_strdup(line);
 		else
 			file->floor_color = 3;//ft_strdup(line);

@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/08 20:12:07 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:30:57 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,34 @@
 
 static void fill_list(t_gnl **lst, char *line)
 {
-	static int	i;
+	static int	i = 0;
 
-	i = 1;
 	ft_lstadd_back(lst,ft_lstnew(ft_strdup(line), i));
 	i++;
 }
 
-void	fill_matrix(char **grid, t_gnl **lst)
+char	**fill_matrix(t_gnl **lst)
 {
 	t_gnl	*temp;
+	int		i;
+	char **grid;
 	
+	i = 0;
 	temp = *lst;
 	while (temp->next != NULL)
 		temp = temp->next;
-	grid = malloc(temp->index);
+	grid = malloc(temp->index + 1);
+	if(!grid)
+		return (NULL);
 	temp = *lst;
 	while (temp != NULL)
 	{
-		
+		grid[i] = ft_strdup(temp->line);
+		temp = temp->next;
+		i++;
 	}
-	
+	grid[i] = NULL;
+	return (grid);
 }
 
 int parse_map(int fd, t_map *file, char *line, t_gnl **lst)
@@ -42,6 +49,6 @@ int parse_map(int fd, t_map *file, char *line, t_gnl **lst)
 	(void)fd;
 	(void)file;
 	fill_list(lst, line);
-	fill_matrix(file->grid, line);
+	file->grid = fill_matrix(lst);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/08 19:22:01 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:27:47 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,18 @@ int main (int ac, char **av)
 	print_teste(file);
 	while (map != NULL)
     {
-        printf("Conteúdo: %s e INDEX: %d", map->line, *map->index);
+        printf("INDEX: %d -- Conteúdo: %s", map->index, map->line);
 
         map = map->next;
     }
 
+	int i = 0;
+	char **grid;
+
+	grid = file->grid;
+	while (grid && grid[i])
+	{
+   		printf("%s\n", grid[i]);
+    	i++;
+	}
 }

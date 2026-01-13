@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 /*
     structs and lists
 */
@@ -32,7 +33,7 @@ typedef struct s_map {
 typedef struct s_gnl
 {
 	char			*line;
-    int             *index;
+    int             index;
 	struct s_gnl	*next;
 }				t_gnl;
 
