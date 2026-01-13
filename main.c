@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/12 20:27:47 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:15:19 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int main (int ac, char **av)
 		return (1);
 	file = malloc(sizeof(t_map));
 	parse_file(fd, file, &map);
+	file->grid = fill_matrix(&map);
 	print_teste(file);
 	while (map != NULL)
     {
@@ -40,7 +41,7 @@ int main (int ac, char **av)
 	char **grid;
 
 	grid = file->grid;
-	while (grid && grid[i])
+	while (grid[i])
 	{
    		printf("%s\n", grid[i]);
     	i++;
