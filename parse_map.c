@@ -6,48 +6,33 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/13 14:21:34 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/19 20:37:02 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-static void fill_list(t_gnl **lst, char *line)
+void	no_newline(char	**matrix)
 {
-	static int	i = 0;
+	int	i;
+	int	j;
 
-	ft_lstadd_back(lst,ft_lstnew(ft_strdup(line), i));
-	i++;
-}
-
-char	**fill_matrix(t_gnl **lst)
-{
-	t_gnl	*temp;
-	int		i;
-	char **grid;
-	
+	j = 0;
 	i = 0;
-	temp = *lst;
-	while (temp->next != NULL)
-		temp = temp->next;
-	grid = malloc(sizeof(char *) * (temp->index + 2));
-	if(!grid)
-		return (NULL);
-	temp = *lst;
-	while (temp != NULL)
+	while (matrix[i])
 	{
-		grid[i] = ft_strdup(temp->line);
-		temp = temp->next;
-		i++;
+		while (matrix[i][j])
+		{
+			if (matrix[i][j] == '\n')
+				matrix[i][j] = 0;
+			j++;
+		}
 	}
-	grid[i] = NULL;
-	return (grid);
+	
 }
 
-int parse_map(int fd, t_map *file, char *line, t_gnl **lst)
+int parse_map(t_map *map)
 {
-	(void)fd;
-	(void)file;
-	fill_list(lst, line);
+	no_newline(map->grid);
 	return (1);
 }
