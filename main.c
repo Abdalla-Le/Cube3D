@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/19 20:30:31 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/19 20:47:45 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int main (int ac, char **av)
 	int i = 0;
 	char **grid;
 
+	puts("GRID ABAIXO \n");
 	grid = file->grid;
 	while (grid[i])
 	{
