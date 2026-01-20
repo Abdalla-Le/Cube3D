@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:06:09 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/19 20:29:11 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/20 18:15:57 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,17 @@ char	**fill_matrix(t_gnl **lst)
 	return (grid);
 }
 
+static int	handle_map_line(t_map *file, t_gnl **lst, char *line)
+{
+	if (check_params(file))
+	{
+		fill_list(lst, line);
+		return (1);
+	}
+	printf("Error\nMap started before all textures/colors were defined.\n");
+	return (0);
+}
+
 int parse_file(int fd, t_map *file, t_gnl **lst)
 {
 	char	*line;
@@ -56,8 +67,14 @@ int parse_file(int fd, t_map *file, t_gnl **lst)
 			i++;
 		if (line[i] >= 65 && line[i] <= 90)
 			path_way(fd, file, line);
-		if (line[i] >= '0' && line[i] <= '9')
-			fill_list(lst, line);
+		else if (line[i] >= '0' && line[i] <= '9')
+		{
+			if (!handle_map_line(file, lst, line))
+			{
+				free(line);
+				return (0);
+			}
+		}
 		i = 0;
 		free(line);
 	}

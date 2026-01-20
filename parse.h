@@ -48,5 +48,5 @@ int		path_way(int fd, t_map *file, char *line);
 int		parse_map(t_map *map);
 char	**fill_matrix(t_gnl **lst);
 void    fill_list(t_gnl **lst, char *line);
-
+int     check_params(t_map *map);
 
