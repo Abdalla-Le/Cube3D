@@ -12,6 +12,39 @@
 
 #include "parse.h"
 
+static int	take_color(char **rgb)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = ft_atoi(rgb[0]);
+	g = ft_atoi(rgb[1]);
+	b = ft_atoi(rgb[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (-1);
+	return ((r << 16) | (g << 8) | (b));
+}
+
+static int	parse_color(char *line)
+{
+	char	**rgb_colors;
+	char	**split_aux;
+	int		real_rgb;
+	int		i;
+
+	i = 0;
+	split_aux = ft_split(line, ' ');
+	rgb_colors = ft_split(split_aux[1], ',');
+	while (i++ < 3)
+		rgb_colors[i] = ft_strtrim(rgb_colors[i], " ");
+	real_rgb = take_color(rgb_colors);
+
+	my_free_matrix(split_aux);
+	my_free_matrix(rgb_colors);
+	return (real_rgb);
+}
+
 static int	find_color(char *line, t_map *file)
 {
 	(void)line;
@@ -23,13 +56,14 @@ static int	find_color(char *line, t_map *file)
 	if (line[i] == 'C' || line[i] == 'F')
 	{
 		if (line[i] == 'C')
-			file->ceil_color = 3;//ft_strdup(line);
+			file->ceil_color = parse_color(line);
 		else
-			file->floor_color = 3;//ft_strdup(line);
+			file->floor_color = parse_color(line);
 		return (1);
 	}
 	return (0);
 }
+
 
 static int	find_way(char *line, t_map *file)
 {
