@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/20 15:58:05 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/22 19:44:10 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void print_teste(t_map *file)
 {
 	printf("%s\n%s\n%s\n%s",file->ea_path, file->no_path, file->we_path, file->so_path);
+	printf("%d e %d\n", file->ceil_color, file->floor_color);
 }
 
 int main (int ac, char **av)
@@ -27,7 +28,8 @@ int main (int ac, char **av)
 	if (!(fd = stdin_parse(av[1])) || ac != 2)
 		return (1);
 	file = malloc(sizeof(t_map));
-	parse_file(fd, file, &map);
+	if (!parse_file(fd, file, &map))
+		return (0);
 	file->grid = fill_matrix(&map);
 	if (!parse_map(file))
 		return (0);
