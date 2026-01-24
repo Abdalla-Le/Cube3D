@@ -49,4 +49,5 @@ int		parse_map(t_map *map);
 char	**fill_matrix(t_gnl **lst);
 void    fill_list(t_gnl **lst, char *line);
 int     check_params(t_map *map);
+int     handle_position(char c, t_map *map, int y, int x);
 

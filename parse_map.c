@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/20 16:10:48 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/24 17:04:28 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**no_newline(char	**matrix)
 }
 
 
-int	verify_caracters(char **matrix)
+static int	verify_caracters(char **matrix)
 {
 	int	i;
 	int	j;
@@ -58,10 +58,38 @@ int	verify_caracters(char **matrix)
 	return (1);
 }
 
+
+static int	find_player(t_map *map)
+{
+	int	y;
+	int	x;
+	int	player_count;
+
+	player_count = 0;
+	y = 0;
+	while (map->grid[y])
+	{
+		x = 0;
+		while (map->grid[y][x])
+		{
+			if (handle_position(map->grid[y][x], map, y, x))
+				player_count++;
+			x++;
+		}
+		y++;
+	}
+	if (player_count != 1)
+	{
+		printf("Error\nMap must have exactly one player start position (N, S, E, or W).\n");
+		return (0);
+	}
+	return (1);
+}
+
 int parse_map(t_map *map)
 {
 	map->grid = no_newline(map->grid);
-	if (!verify_caracters(map->grid))
+	if ((!verify_caracters(map->grid)) || (!find_player(map->grid)))
 		return (0);
 	return (1);
 }
