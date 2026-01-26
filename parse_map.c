@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/25 21:12:23 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:20:50 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int parse_map(t_map *map)
 	if ((!verify_caracters(map->grid)) || (!find_player(map)))
 		return (0);
 	normalize_grid(map);
-	
+	if (!validate_wall(map))
+		return (0);
 	return (1);
 }
