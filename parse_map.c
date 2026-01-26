@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/24 17:04:28 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:12:23 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,16 @@ static int	find_player(t_map *map)
 		printf("Error\nMap must have exactly one player start position (N, S, E, or W).\n");
 		return (0);
 	}
+	get_width(map);
 	return (1);
 }
 
 int parse_map(t_map *map)
 {
 	map->grid = no_newline(map->grid);
-	if ((!verify_caracters(map->grid)) || (!find_player(map->grid)))
+	if ((!verify_caracters(map->grid)) || (!find_player(map)))
 		return (0);
+	normalize_grid(map);
+	
 	return (1);
 }

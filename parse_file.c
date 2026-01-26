@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:06:09 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/20 18:15:57 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/25 20:03:17 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void fill_list(t_gnl **lst, char *line)
 	i++;
 }
 
-char	**fill_matrix(t_gnl **lst)
+char	**fill_matrix(t_gnl **lst, t_map *map)
 {
 	t_gnl	*temp;
 	int		i;
@@ -31,6 +31,7 @@ char	**fill_matrix(t_gnl **lst)
 	while (temp->next != NULL)
 		temp = temp->next;
 	grid = malloc(sizeof(char *) * (temp->index + 2));
+	map->height = temp->index;
 	if(!grid)
 		return (NULL);
 	temp = *lst;

@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 18:01:13 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/24 17:04:22 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:19:08 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,42 @@ int	handle_position(char c, t_map *map, int y, int x)
 		return (1);
 	}
 	return (0);
+}
+
+void	get_width(t_map *map)
+{
+	int j;
+	int len;
+
+	j = 0;
+	map->width = 0;
+	while (map->grid[j])
+	{
+		len = ft_strlen(map->grid[j]);
+		if (len > map->width)
+		map->width = len;
+		j++;
+	}
+}
+
+void	normalize_grid(t_map *map)
+{
+	char	**new_grid;
+	int		y;
+	int		original_len;
+
+	new_grid = malloc(sizeof(char **) * (map->height + 1));
+	y = 0;
+	while (y < map->height)
+	{
+		new_grid[y] = malloc(sizeof(char *) * (map->width + 1));
+		ft_memset(new_grid[y], ' ', map->width);
+		new_grid[y][map->width] = 0;
+		original_len = ft_strlen(map->grid[y]);
+		ft_memcpy(new_grid[y], map->grid[y], original_len);
+		y++;
+	}
+	new_grid[y] = NULL;
+	my_free_matrix(map->grid);
+	map->grid = new_grid;
 }

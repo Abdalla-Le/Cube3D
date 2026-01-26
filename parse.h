@@ -46,8 +46,10 @@ void	ft_lstadd_back(t_gnl **lst, t_gnl*new);
 t_gnl	*ft_lstnew(char *content, int i);
 int		path_way(int fd, t_map *file, char *line);
 int		parse_map(t_map *map);
-char	**fill_matrix(t_gnl **lst);
+char	**fill_matrix(t_gnl **lst, t_map *map);
 void    fill_list(t_gnl **lst, char *line);
 int     check_params(t_map *map);
 int     handle_position(char c, t_map *map, int y, int x);
+void	get_width(t_map *map);
+void	normalize_grid(t_map *map);
 

@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/22 19:44:10 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/25 20:04:16 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main (int ac, char **av)
 	file = malloc(sizeof(t_map));
 	if (!parse_file(fd, file, &map))
 		return (0);
-	file->grid = fill_matrix(&map);
+	file->grid = fill_matrix(&map, file);
 	if (!parse_map(file))
 		return (0);
 	print_teste(file);
