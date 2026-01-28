@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:48:28 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/26 15:20:50 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:10:18 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static int	find_player(t_map *map)
 		return (0);
 	}
 	get_width(map);
+	printf("%d", map->width);
 	return (1);
 }
 

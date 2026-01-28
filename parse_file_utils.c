@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 18:01:13 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/25 21:19:08 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:22:04 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	get_width(t_map *map)
 		map->width = len;
 		j++;
 	}
+	printf(" .%d ", len);
 }
 
 void	normalize_grid(t_map *map)
@@ -52,7 +53,7 @@ void	normalize_grid(t_map *map)
 	int		y;
 	int		original_len;
 
-	new_grid = malloc(sizeof(char **) * (map->height + 1));
+	new_grid = malloc(sizeof(char *) * (map->height + 1));
 	y = 0;
 	while (y < map->height)
 	{

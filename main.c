@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/25 20:04:16 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:53:54 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int main (int ac, char **av)
 	t_gnl	*map;
 
 	map = NULL;
+	puts("a");
 	if (!(fd = stdin_parse(av[1])) || ac != 2)
 		return (1);
 	file = malloc(sizeof(t_map));
