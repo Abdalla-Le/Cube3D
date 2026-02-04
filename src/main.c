@@ -1,134 +1,270 @@
-#include "../includes/cub3d.h"
+#include "../includes/cub3d.h" // Ajuste o caminho do include se necessário
 #include <math.h>
 
-// 1. Função de fechar (Close)
-int close_game(t_data *data)
+// Fecha a janela e termina o programa de forma limpa
+int	close_window(t_data *data)
 {
-    mlx_destroy_window(data->mlx, data->win);
-    mlx_destroy_display(data->mlx);
-    free(data->mlx);
-    exit(0);
-    return (0);
+	mlx_destroy_window(data->mlx, data->win);
+	exit(0);
+	return (0);
 }
 
-int handle_keypress(int keycode, t_data *data)
+// Ouve as teclas. Se for ESC, fecha.
+// Ouve as teclas
+// Ouve as teclas
+int	key_handler(int keycode, t_data *data)
 {
-    if (keycode == 65307) // ESC
-        close_game(data);
-    return (0);
+	double move_speed = 0.1;
+	double rot_speed = 0.08; // Aumentei um tiquinho pra ficar mais ágil
+	double margin = 0.2;     // Nossa "margem de segurança" (o gordinho)
+
+	if (keycode == 65307)
+		close_window(data);
+
+	// W - ANDAR PARA FRENTE
+	if (keycode == 119)
+	{
+		// Tenta mover no X (Checa se o quadrado destino no mapa é zero)
+		if (data->map[(int)(data->player.pos_x + data->player.dir_x * margin)][(int)(data->player.pos_y)] == 0)
+			data->player.pos_x += data->player.dir_x * move_speed;
+		
+		// Tenta mover no Y (Independente do que aconteceu no X)
+		if (data->map[(int)(data->player.pos_x)][(int)(data->player.pos_y + data->player.dir_y * margin)] == 0)
+			data->player.pos_y += data->player.dir_y * move_speed;
+	}
+
+	// S - ANDAR PARA TRÁS
+	if (keycode == 115)
+	{
+		// Mesma lógica, mas subtraindo a direção
+		if (data->map[(int)(data->player.pos_x - data->player.dir_x * margin)][(int)(data->player.pos_y)] == 0)
+			data->player.pos_x -= data->player.dir_x * move_speed;
+		
+		if (data->map[(int)(data->player.pos_x)][(int)(data->player.pos_y - data->player.dir_y * margin)] == 0)
+			data->player.pos_y -= data->player.dir_y * move_speed;
+	}
+
+	// SETA DIREITA - GIRAR
+	if (keycode == 65363)
+	{
+		double old_dir_x = data->player.dir_x;
+		data->player.dir_x = data->player.dir_x * cos(-rot_speed) - data->player.dir_y * sin(-rot_speed);
+		data->player.dir_y = old_dir_x * sin(-rot_speed) + data->player.dir_y * cos(-rot_speed);
+		double old_plane_x = data->player.plane_x;
+		data->player.plane_x = data->player.plane_x * cos(-rot_speed) - data->player.plane_y * sin(-rot_speed);
+		data->player.plane_y = old_plane_x * sin(-rot_speed) + data->player.plane_y * cos(-rot_speed);
+	}
+
+	// SETA ESQUERDA - GIRAR
+	if (keycode == 65361)
+	{
+		double old_dir_x = data->player.dir_x;
+		data->player.dir_x = data->player.dir_x * cos(rot_speed) - data->player.dir_y * sin(rot_speed);
+		data->player.dir_y = old_dir_x * sin(rot_speed) + data->player.dir_y * cos(rot_speed);
+		double old_plane_x = data->player.plane_x;
+		data->player.plane_x = data->player.plane_x * cos(rot_speed) - data->player.plane_y * sin(rot_speed);
+		data->player.plane_y = old_plane_x * sin(rot_speed) + data->player.plane_y * cos(rot_speed);
+	}
+
+	return (0);
 }
 
-// 2. Função de Pixel (Tem que vir antes de quem usa ela)
-void    my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// Função auxiliar para desenhar pixels no buffer da imagem
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-    char    *dst;
-    dst = data->img.addr + (y * data->img.line_len + x * (data->img.bpp / 8));
-    *(unsigned int*)dst = color;
+	char	*dst;
+
+	// Proteção simples pra não desenhar fora da memória
+	if (x < 0 || x >= W_WIDTH || y < 0 || y >= W_HEIGHT)
+		return;
+
+	// CORREÇÃO: Acessando data->img.addr e data->img.line_len
+	dst = data->img.addr + (y * data->img.line_len + x * (data->img.bpp / 8));
+	*(unsigned int*)dst = color;
 }
 
-// 3. Inicializa Jogador
-void    init_player(t_data *data)
+// Função para desenhar a linha vertical
+void	draw_vertical_line(t_data *data, int x, int draw_start, int draw_end, int color)
 {
-    data->player.pos_x = 22.0;
-    data->player.pos_y = 12.0;
-    data->player.dir_x = -1.0;
-    data->player.dir_y = 0.0;
-    data->player.plane_x = 0.0;
-    data->player.plane_y = 0.66;
+	int	y;
+
+	y = draw_start;
+	while (y < draw_end)
+	{
+		my_mlx_pixel_put(data, x, y, color);
+		y++;
+	}
 }
 
-// 4. Carrega Mapa
-void    load_map(t_data *data)
+
+// O CORAÇÃO DO JOGO: Loop de Raycasting
+int	raycasting_loop(t_data *data)
 {
-    // Mapa Hardcoded
-    int worldMap[24][24] = {
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-        {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-    };
-    for (int i = 0; i < 24; i++)
-        for (int j = 0; j < 24; j++)
-            data->map[i][j] = worldMap[i][j];
+	int		x;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	double	perp_wall_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		color;
+
+	// 1. Pinta o fundo (Teto e Chão)
+	for (int i = 0; i < W_HEIGHT / 2; i++)
+		for (int j = 0; j < W_WIDTH; j++)
+			my_mlx_pixel_put(data, j, i, 0x87CEEB); // Teto Azul Céu
+
+	for (int i = W_HEIGHT / 2; i < W_HEIGHT; i++)
+		for (int j = 0; j < W_WIDTH; j++)
+			my_mlx_pixel_put(data, j, i, 0x222222); // Chão Cinza Escuro
+
+	// 2. Loop principal dos raios
+	x = 0;
+	while (x < W_WIDTH)
+	{
+		// --- SETUP ---
+		camera_x = 2 * x / (double)W_WIDTH - 1;
+		ray_dir_x = data->player.dir_x + data->player.plane_x * camera_x;
+		ray_dir_y = data->player.dir_y + data->player.plane_y * camera_x;
+
+		map_x = (int)data->player.pos_x;
+		map_y = (int)data->player.pos_y;
+
+		delta_dist_x = fabs(1 / ray_dir_x);
+		delta_dist_y = fabs(1 / ray_dir_y);
+
+		// --- CALCULA STEP E SIDE_DIST ---
+		if (ray_dir_x < 0)
+		{
+			step_x = -1;
+			side_dist_x = (data->player.pos_x - map_x) * delta_dist_x;
+		}
+		else
+		{
+			step_x = 1;
+			side_dist_x = (map_x + 1.0 - data->player.pos_x) * delta_dist_x;
+		}
+		if (ray_dir_y < 0)
+		{
+			step_y = -1;
+			side_dist_y = (data->player.pos_y - map_y) * delta_dist_y;
+		}
+		else
+		{
+			step_y = 1;
+			side_dist_y = (map_y + 1.0 - data->player.pos_y) * delta_dist_y;
+		}
+
+		// --- DDA (Achar Parede) ---
+		hit = 0;
+		while (hit == 0)
+		{
+			if (side_dist_x < side_dist_y)
+			{
+				side_dist_x += delta_dist_x;
+				map_x += step_x;
+				side = 0;
+			}
+			else
+			{
+				side_dist_y += delta_dist_y;
+				map_y += step_y;
+				side = 1;
+			}
+			if (data->map[map_x][map_y] > 0)
+				hit = 1;
+		}
+
+		// --- CÁLCULO FINAL ---
+		if (side == 0)
+			perp_wall_dist = (side_dist_x - delta_dist_x);
+		else
+			perp_wall_dist = (side_dist_y - delta_dist_y);
+
+		line_height = (int)(W_HEIGHT / perp_wall_dist);
+
+		draw_start = -line_height / 2 + W_HEIGHT / 2;
+		if (draw_start < 0)
+			draw_start = 0;
+		draw_end = line_height / 2 + W_HEIGHT / 2;
+		if (draw_end >= W_HEIGHT)
+			draw_end = W_HEIGHT - 1;
+
+		if (data->map[map_x][map_y] == 1)
+			color = 0xFF0000;
+		else if (data->map[map_x][map_y] == 2)
+			color = 0x00FF00;
+		else
+			color = 0xFFFF00;
+
+		if (side == 1)
+			color = color / 2;
+
+		draw_vertical_line(data, x, draw_start, draw_end, color);
+		x++;
+	}
+	
+	// CORREÇÃO: Passando data->img.img_ptr
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
+	return (0);
 }
 
-int render_game(t_data *data)
+int	main(void)
 {
-    // Limpa fundo (Preto)
-    for (int y=0; y<W_HEIGHT; y++) for (int x=0; x<W_WIDTH; x++) 
-        my_mlx_pixel_put(data, x, y, 0x000000);
+	t_data	data;
 
-    int x = 0;
-    while (x < W_WIDTH)
-    {
-        // 1. Calcula a posição na régua (-1 a 1)
-        double camera_x = 2 * x / (double)W_WIDTH - 1;
+	// 1. INICIALIZAÇÃO DA MLX
+	data.mlx = mlx_init();
+	data.win = mlx_new_window(data.mlx, W_WIDTH, W_HEIGHT, "Cub3D Leticia");
+	
+	// CORREÇÃO: Inicializando dentro de data.img
+	data.img.img_ptr = mlx_new_image(data.mlx, W_WIDTH, W_HEIGHT);
+	data.img.addr = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.line_len, &data.img.endian);
 
-        // 2. CALCULA A DIREÇÃO DO RAIO
-        double ray_dir_x = data->player.dir_x + data->player.plane_x * camera_x;
-        double ray_dir_y = data->player.dir_y + data->player.plane_y * camera_x;
+	// 2. INICIALIZAÇÃO DO JOGADOR
+	data.player.pos_x = 12.0;
+	data.player.pos_y = 12.0;
+	data.player.dir_x = -1.0;
+	data.player.dir_y = 0.0;
+	data.player.plane_x = 0.0;
+	data.player.plane_y = 0.66;
 
-        // --- TRUQUE NOVO ---
-        // Essa linha não faz nada, mas avisa o compilador: "Eu sei que essa variável existe, relaxa".
-        (void)ray_dir_x; 
+	// 3. CRIAÇÃO MANUAL DO MAPA
+	for (int i = 0; i < 24; i++)
+	{
+		for (int j = 0; j < 24; j++)
+		{
+			if (i == 0 || i == 23 || j == 0 || j == 23)
+				data.map[i][j] = 1;
+			else
+				data.map[i][j] = 0;
+		}
+	}
+	data.map[10][10] = 2; 
 
-        // 3. Visualização
-        int color;
-        
-        if (ray_dir_y < 0)
-            color = 0xFF0000; // Vermelho (Esquerda)
-        else if (ray_dir_y > 0)
-            color = 0x0000FF; // Azul (Direita)
-        else
-            color = 0xFFFFFF; // Branco (Meio)
+	// Escuta o clique no "X" vermelho da janela (Evento 17 = DestroyNotify)
+	mlx_hook(data.win, 17, 0, close_window, &data);
+	
+	// Escuta quando carregas numa tecla (Evento 2 = KeyPress)
+	// A máscara 1L<<0 serve para dizer que queremos eventos de teclas
+	mlx_hook(data.win, 2, 1L<<0, key_handler, &data);
 
-        // Desenha a linha
-        int y = 100;
-        while (y < 500) {
-            my_mlx_pixel_put(data, x, y, color);
-            y++;
-        }
-        x++;
-    }
-    mlx_put_image_to_window(data->mlx, data->win, data->img.img_ptr, 0, 0);
-    return (0);
-}
+	// --------------------------
 
-int main(void)
-{
-    t_data data;
 
-    data.mlx = mlx_init();
-    data.win = mlx_new_window(data.mlx, W_WIDTH, W_HEIGHT, "Cub3D Raycasting");
-    data.img.img_ptr = mlx_new_image(data.mlx, W_WIDTH, W_HEIGHT);
-    data.img.addr = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp,
-            &data.img.line_len, &data.img.endian);
+	mlx_loop_hook(data.mlx, &raycasting_loop, &data);
+	mlx_loop(data.mlx);
 
-    load_map(&data);
-    init_player(&data);
-
-    mlx_loop_hook(data.mlx, &render_game, &data);
-    mlx_hook(data.win, 17, 0, close_game, &data);
-    mlx_key_hook(data.win, handle_keypress, &data);
-    mlx_loop(data.mlx);
+	return (0);
 }
