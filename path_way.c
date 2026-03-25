@@ -12,20 +12,6 @@
 
 #include "parse.h"
 
-static int	take_color(char **rgb)
-{
-	int	r;
-	int	g;
-	int	b;
-
-	r = ft_atoi(rgb[0]);
-	g = ft_atoi(rgb[1]);
-	b = ft_atoi(rgb[2]);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (-1);
-	return ((r << 16) | (g << 8) | (b));
-}
-
 static int	parse_color(char *line)
 {
 	char	**rgb_colors;
@@ -44,7 +30,10 @@ static int	parse_color(char *line)
 	}
 	real_rgb = take_color(rgb_colors);
 	if (real_rgb == -1)
-		return (-1);
+	{
+		printf("Error\nInvalid RGB color value (0-255 allowed).\n");
+		return (-2);
+	}
 	my_free_matrix(split_aux);
 	my_free_matrix(rgb_colors);
 	return (real_rgb);
@@ -60,11 +49,19 @@ static int	find_color(char *line, t_map *file)
 		i++;
 	if (line[i] == 'C' || line[i] == 'F')
 	{
+		if ((line[i] == 'C' && file->ceil_color != -1) || 
+			(line[i] == 'F' && file->floor_color != -1))
+		{
+			printf("Error\nColor defined more than once: %c\n", line[i]);
+			return (0);
+		}
 		if (line[i] == 'C')
 			file->ceil_color = parse_color(line);
 		else
 			file->floor_color = parse_color(line);
 		return (1);
+		if (file->ceil_color == -2 || file->floor_color == -2) 
+			return (0);
 	}
 	if ((file->ceil_color == -1) || (file->floor_color == -1))
 		return (0);
@@ -78,19 +75,17 @@ static int	find_way(char *line, t_map *file)
 	i = 0;
 	while (line[i] && line[i] == ' ')
 		i++;
-	if (line[i] == 'E' || line[i] == 'W' || line[i] == 'S' || line[i] == 'N' )
-	{
-		if (line[i] == 'E')
-			file->ea_path = ft_strdup(line);
-		if (line[i] == 'W')
-			file->we_path = ft_strdup(line);
-		if (line[i] == 'S')
-			file->so_path = ft_strdup(line);
-		if (line[i] == 'N')
-			file->no_path = ft_strdup(line);
-		return (1);
-	}
-	return (0);
+	if (line[i] == 'N' && line[i + 1] == 'O')
+		file->no_path = get_clean_path(line);
+	else if (line[i] == 'S' && line[i + 1] == 'O')
+		file->so_path = get_clean_path(line);
+	else if (line[i] == 'W' && line[i + 1] == 'E')
+		file->we_path = get_clean_path(line);
+	else if (line[i] == 'E' && line[i + 1] == 'A')
+		file->ea_path = get_clean_path(line);
+	else
+		return (0);
+	return (1);
 }
 
 int	path_way(int fd, t_map *file, char *line)

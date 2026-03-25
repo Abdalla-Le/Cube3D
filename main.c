@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 13:00:56 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/28 15:53:54 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/03/25 16:20:09 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void print_teste(t_map *file)
 {
 	printf("%s\n%s\n%s\n%s",file->ea_path, file->no_path, file->we_path, file->so_path);
-	printf("%d e %d\n", file->ceil_color, file->floor_color);
+	printf("\n%d e %d\n", file->ceil_color, file->floor_color);
 }
 
 int main (int ac, char **av)
@@ -25,7 +25,6 @@ int main (int ac, char **av)
 	t_gnl	*map;
 
 	map = NULL;
-	puts("a");
 	if (!(fd = stdin_parse(av[1])) || ac != 2)
 		return (1);
 	file = malloc(sizeof(t_map));

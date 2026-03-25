@@ -53,4 +53,7 @@ int     handle_position(char c, t_map *map, int y, int x);
 void	get_width(t_map *map);
 void	normalize_grid(t_map *map);
 int     validate_wall(t_map *map);
+char	*get_clean_path(char *line);
+int	    take_color(char **rgb);
+
 
