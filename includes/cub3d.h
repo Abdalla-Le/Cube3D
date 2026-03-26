@@ -31,6 +31,7 @@ typedef struct s_data {
     void        *mlx;
     void        *win;
     t_img       img;
+    t_img       tex_test;
     t_player    player; // Adicionamos o jogador aqui
     int         map[24][24]; // Um mapa fixo temporário só pra testar
 } t_data;

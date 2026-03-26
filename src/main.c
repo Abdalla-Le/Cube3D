@@ -220,6 +220,28 @@ int	raycasting_loop(t_data *data)
 	return (0);
 }
 
+void	load_texture(t_data *data)
+{
+	int	width;
+	int	height;
+
+	// 1. Pede pra MLX ler o arquivo XPM
+	data->tex_test.img_ptr = mlx_xpm_file_to_image(data->mlx, "textures/teste.xpm", &width, &height);
+	
+	// Proteção básica: se a imagem não existir ou o nome estiver errado, o ponteiro fica nulo
+	if (data->tex_test.img_ptr == NULL)
+	{
+		write(2, "Erro\nNao achou a textura!\n", 26);
+		exit(1);
+	}
+
+	// 2. Pega o endereço da "matriz de pixels" da textura
+	data->tex_test.addr = mlx_get_data_addr(data->tex_test.img_ptr, 
+                                            &data->tex_test.bpp, 
+                                            &data->tex_test.line_len, 
+                                            &data->tex_test.endian);
+}
+
 int	main(void)
 {
 	t_data	data;
@@ -232,6 +254,7 @@ int	main(void)
 	data.img.img_ptr = mlx_new_image(data.mlx, W_WIDTH, W_HEIGHT);
 	data.img.addr = mlx_get_data_addr(data.img.img_ptr, &data.img.bpp, &data.img.line_len, &data.img.endian);
 
+	load_texture(&data);
 	// 2. INICIALIZAÇÃO DO JOGADOR
 	data.player.pos_x = 12.0;
 	data.player.pos_y = 12.0;
