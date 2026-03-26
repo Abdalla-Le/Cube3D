@@ -41,7 +41,6 @@ static int	parse_color(char *line)
 
 static int	find_color(char *line, t_map *file)
 {
-	(void)line;
 	int	i;
 
 	i = 0;
@@ -52,19 +51,17 @@ static int	find_color(char *line, t_map *file)
 		if ((line[i] == 'C' && file->ceil_color != -1) || 
 			(line[i] == 'F' && file->floor_color != -1))
 		{
-			printf("Error\nColor defined more than once: %c\n", line[i]);
+			printf("Error\nColor defined more than once\n");
 			return (0);
 		}
 		if (line[i] == 'C')
 			file->ceil_color = parse_color(line);
 		else
 			file->floor_color = parse_color(line);
-		return (1);
 		if (file->ceil_color == -2 || file->floor_color == -2) 
 			return (0);
+		return (1);
 	}
-	if ((file->ceil_color == -1) || (file->floor_color == -1))
-		return (0);
 	return (1);
 }
 
@@ -88,13 +85,30 @@ static int	find_way(char *line, t_map *file)
 	return (1);
 }
 
+// int	path_way(int fd, t_map *file, char *line)
+// {
+// 	(void)fd;
+// 	if ((line[0] >= 65 && line[0] <= 90) || line[0] == ' ')
+// 	{
+// 		if (!find_color(line, file) || !find_way(line, file))
+// 			return 0;
+// 	}
+// 	return (1);
+// }
+
 int	path_way(int fd, t_map *file, char *line)
 {
+	int	res_way;
+	int	res_color;
+
 	(void)fd;
-	if ((line[0] >= 65 && line[0] <= 90) || line[0] == ' ')
-	{
-		if (!find_color(line, file) || !find_way(line, file))
-			return 0;
-	}
+	res_way = find_way(line, file);
+	if (res_way == 1)
+		return (1);
+	res_color = find_color(line, file);
+	if (res_color == 1)
+		return (1);
+	if (res_color == 0)
+		return (0);
 	return (1);
 }

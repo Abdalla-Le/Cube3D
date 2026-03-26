@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:06:09 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/28 16:14:55 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:56:01 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int parse_file(int fd, t_map *file, t_gnl **lst)
 	char	*line;
 	int		i;
 
-	i = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
+		i = 0;
 		while (line[i] && line[i] == ' ')
 			i++;
 		if (line[i] >= 65 && line[i] <= 90)

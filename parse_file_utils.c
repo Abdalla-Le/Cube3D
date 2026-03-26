@@ -6,7 +6,7 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 18:01:13 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/01/28 16:22:04 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/03/25 19:49:53 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int check_params(t_map *map)
 {
+	if (!map->no_path) printf("Falta NO\n");
+    if (!map->so_path) printf("Falta SO\n");
+    if (!map->we_path) printf("Falta WE\n");
+    if (!map->ea_path) printf("Falta EA\n");
+    if (map->floor_color == -1) printf("Falta Floor\n");
+    if (map->ceil_color == -1) printf("Falta Ceil\n");
 	return (map->no_path && map->so_path && map->we_path && 
 			 map->ea_path && map->floor_color > -1 && map->ceil_color > -1);
 }

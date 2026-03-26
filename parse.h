@@ -55,5 +55,8 @@ void	normalize_grid(t_map *map);
 int     validate_wall(t_map *map);
 char	*get_clean_path(char *line);
 int	    take_color(char **rgb);
+void	free_map_struct(t_map *map);
+t_map	*init_parse(char *file_name);
+
 
 

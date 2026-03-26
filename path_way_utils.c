@@ -6,25 +6,43 @@
 /*   By: ancarlos <ancarlos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 16:12:58 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/03/25 16:14:47 by ancarlos         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:56:59 by ancarlos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
+static int	is_xpm(char *path)
+{
+	int	len;
+
+	if (!path)
+		return (0);
+	len = ft_strlen(path);
+	if (len < 5 || ft_strncmp(&path[len - 4], ".xpm", 4) != 0)
+		return (0);
+	return (1);
+}
+
 char	*get_clean_path(char *line)
 {
-	char	*path;
+	char	*temp;
 	int		i;
 
 	i = 0;
-	while (line[i] && line[i] == ' ')
+	while (line[i] && line[i] == ' ') 
 		i++;
-	i += 2; 
-	while (line[i] && line[i] == ' ')
+	i += 2;
+	while (line[i] && line[i] == ' ') 
 		i++;
-	path = ft_strtrim(&line[i], " \n");
-	return (path);
+	temp = ft_strtrim(&line[i], " \n");
+	if (!is_xpm(temp))
+	{
+		printf("Error\nInvalid texture extension: %s\n", temp);
+		free(temp);
+		return (NULL);
+	}
+	return (temp);
 }
 
 

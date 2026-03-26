@@ -2,17 +2,14 @@
 NAME        = cube3d
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -g
-# Adicionei o ponto (.) para buscar headers na raiz onde está o parse.h
 CPPFLAGS    = -I. -I$(LIB_DIR)
 
 LIB_DIR     = lib
 LIBFT       = $(LIB_DIR)/libft.a
 
-# Fontes que aparecem na sua imagem
-SRCS        = main.c stdin_parse.c parse_map.c parse_file.c path_way.c lst_moves.c parse_file_utils.c validate_wall.c path_way_utils.c
+SRCS        = main.c stdin_parse.c parse_map.c parse_file.c path_way.c lst_moves.c parse_file_utils.c validate_wall.c path_way_utils.c free_all.c parse.c
 OBJS        = $(SRCS:.c=.o)
 
-# Removi a parte do Parse que não existe como pasta na imagem
 LDFLAGS     = -L$(LIB_DIR) -lft -lreadline
 
 RM          = rm -f
