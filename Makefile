@@ -1,54 +1,34 @@
-# --- NAMES ---
-NAME		= cub3D
+NAME    = cub3D
 
-# --- DIRECTORIES ---
-SRC_DIR		= src
-OBJ_DIR		= objects
-INC_DIR		= includes
-MLX_DIR		= mlx
+CC      = cc
+CFLAGS  = -Wall -Wextra -Werror
 
-# --- FILES ---
-# Add new .c files here as you create them
-SRC_FILES	= main.c
+MLX_DIR = ./mlx
+MLX_INC = -I$(MLX_DIR)
+MLX_LNK = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-# These lines map the files to the correct folders
-SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS		= $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+INC_DIR = ./includes
+SRC_DIR = ./src
 
-# --- COMPILER & FLAGS ---
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -g3 -I$(INC_DIR)
+SRCS    = $(SRC_DIR)/main.c \
+          $(SRC_DIR)/hooks.c \
+          $(SRC_DIR)/render.c \
+          $(SRC_DIR)/draw.c
 
-# MLX Flags for Linux/WSL
-MLX_FLAGS	= -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz
-
-# --- RULES ---
+OBJS    = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-# Rule to compile the executable
 $(NAME): $(OBJS)
-	@echo "Compiling MiniLibX..."
-	@make -C $(MLX_DIR) > /dev/null 2>&1
-	@echo "Linking $(NAME)..."
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $(NAME)
-	@echo "Done! ./$(NAME) is ready."
+	$(CC) $(CFLAGS) $(OBJS) $(MLX_LNK) -o $(NAME)
 
-# Rule to compile objects (src/*.c -> objects/*.o)
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.c $(INC_DIR)/cub3d.h
+	$(CC) $(CFLAGS) $(MLX_INC) -I$(INC_DIR) -c $< -o $@
 
-# Cleanup rules
 clean:
-	@echo "Cleaning object files..."
-	@rm -rf $(OBJ_DIR)
-	@make clean -C $(MLX_DIR) > /dev/null 2>&1
+	rm -f $(OBJS)
 
 fclean: clean
-	@echo "Removing executable..."
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re

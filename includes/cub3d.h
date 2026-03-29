@@ -4,36 +4,51 @@
 # include "../mlx/mlx.h"
 # include <stdlib.h>
 # include <unistd.h>
-# include <math.h> // Precisa dessa para as contas matematicas
+# include <math.h>
 
 # define W_WIDTH 800
 # define W_HEIGHT 600
 
-// Struct do Jogador (Matemática Pura)
-typedef struct s_player {
-    double  pos_x;      // Posição X no mapa
-    double  pos_y;      // Posição Y no mapa
-    double  dir_x;      // Vetor de Direção X
-    double  dir_y;      // Vetor de Direção Y
-    double  plane_x;    // Vetor do Plano de Câmera X (O "Leque")
-    double  plane_y;    // Vetor do Plano de Câmera Y
-} t_player;
+# define KEY_ESC   65307
+# define KEY_W     119
+# define KEY_S     115
+# define KEY_LEFT  65361
+# define KEY_RIGHT 65363
 
-typedef struct s_img {
+typedef struct s_player
+{
+    double  pos_x;
+    double  pos_y;
+    double  dir_x;
+    double  dir_y;
+    double  plane_x;
+    double  plane_y;
+}    t_player;
+
+typedef struct s_img
+{
     void    *img_ptr;
     char    *addr;
     int     bpp;
     int     line_len;
     int     endian;
-} t_img;
+}    t_img;
 
-typedef struct s_data {
+typedef struct s_data
+{
     void        *mlx;
     void        *win;
     t_img       img;
     t_img       tex_test;
-    t_player    player; // Adicionamos o jogador aqui
-    int         map[24][24]; // Um mapa fixo temporário só pra testar
-} t_data;
+    t_player    player;
+    int         map[24][24];
+}    t_data;
+
+int        close_window(t_data *data);
+int        key_handler(int keycode, t_data *data);
+void    my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void    draw_vertical_line(t_data *data, int x, int draw_start,int draw_end, int color);
+int        raycasting_loop(t_data *data);
+void    load_texture(t_data *data);
 
 #endif
