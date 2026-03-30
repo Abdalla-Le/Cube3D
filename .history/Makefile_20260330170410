@@ -1,0 +1,73 @@
+# --- NAMES ---
+NAME		= cub3D
+
+# --- DIRECTORIES ---
+SRC_DIR		= src
+OBJ_DIR		= objects
+INC_DIR		= includes
+MLX_DIR		= mlx
+LIB_DIR		= lib
+LIBFT		= $(LIB_DIR)/libft.a
+
+# --- FILES ---
+# Add new .c files here as you create them
+SRC_FILES	= main.c \
+			  free_all.c \
+			  lst_moves.c \
+			  parse.c \
+			  parse_file.c \
+			  parse_file_utils.c \
+			  parse_map.c \
+			  path_way.c \
+			  path_way_utils.c \
+			  stdin_parse.c \
+			  validate_wall.c
+
+# These lines map the files to the correct folders
+SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS		= $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+
+# --- COMPILER & FLAGS ---
+CC			= cc
+CFLAGS		= -Wall -Wextra -Werror -g3 -I$(INC_DIR) -I$(LIB_DIR)
+
+# MLX Flags for Linux/WSL
+MLX_FLAGS	= -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+LDFLAGS		= -L$(LIB_DIR) -lft -lreadline $(MLX_FLAGS)
+
+# --- RULES ---
+
+all: $(NAME)
+
+# Rule to compile the executable
+$(NAME): $(OBJS) $(LIBFT)
+	@echo "Compiling MiniLibX..."
+	@make -C $(MLX_DIR) > /dev/null 2>&1
+	@echo "Linking $(NAME)..."
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@echo "Done! ./$(NAME) is ready."
+
+$(LIBFT):
+	@echo "Compiling Libft..."
+	@make -C $(LIB_DIR) > /dev/null 2>&1
+
+# Rule to compile objects (src/*.c -> objects/*.o)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Cleanup rules
+clean:
+	@echo "Cleaning object files..."
+	@rm -rf $(OBJ_DIR)
+	@make clean -C $(MLX_DIR) > /dev/null 2>&1
+	@make clean -C $(LIB_DIR) > /dev/null 2>&1
+
+fclean: clean
+	@echo "Removing executable..."
+	@rm -f $(NAME)
+	@make fclean -C $(LIB_DIR) > /dev/null 2>&1
+
+re: fclean all
+
+.PHONY: all clean fclean re

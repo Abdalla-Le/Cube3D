@@ -1,0 +1,12 @@
+<<<<<<< HEAD
+cub3D
+objects/
+*.o
+.vscode/
+=======
+./a.out
+*.o
+*.a
+.vscode
+cube3d
+>>>>>>> origin/Parse
