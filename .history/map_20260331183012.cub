@@ -1,0 +1,12 @@
+NO ./textures/stone1.xpm
+SO ./textures/stone3.xpm
+WE ./textures/stone2.xpm
+EA ./textures/stone4.xpm
+F 220,100,0
+C 225,30,0
+
+111111
+100101
+101001
+1100N1
+111111
