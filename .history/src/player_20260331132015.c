@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   player_20260331132015.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 13:19:39 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 13:20:15 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:57:10 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,21 @@ void	find_player(t_data *data)
 	int	j;
 
 	i = 0;
-	while (data->real_map.grid[i] != NULL)
+	while (data->real_map->grid[i] != NULL)
 	{
 		j = 0;
-		while (data->real_map.grid[i][j] != '\0')
+		while (data->real_map->grid[i][j] != '\0')
 		{
-			if (data->real_map.grid[i][j] == 'N'
-				|| data->real_map.grid[i][j] == 'S'
-				|| data->real_map.grid[i][j] == 'E'
-				|| data->real_map.grid[i][j] == 'W')
+			if (data->real_map->grid[i][j] == 'N'
+				|| data->real_map->grid[i][j] == 'S'
+				|| data->real_map->grid[i][j] == 'E'
+				|| data->real_map->grid[i][j] == 'W')
 			{
 				data->player.pos_x = i + 0.5;
 				data->player.pos_y = j + 0.5;
-				find_dir(data, data->real_map.grid[i][j]);
-				find_plane(data, data->real_map.grid[i][j]);
-				data->real_map.grid[i][j] = '0';
+				find_dir(data, data->real_map->grid[i][j]);
+				find_plane(data, data->real_map->grid[i][j]);
+				data->real_map->grid[i][j] = '0';
 			}
 			j++;
 		}

@@ -203,16 +203,16 @@ int	raycasting_loop(t_data *data)
 			}
 
 			// Checa limites de altura
-			if (map_x < 0 || map_x >= data->real_map.height)
+			if (map_x < 0 || map_x >= data->real_map->height)
 				hit = 1;
 			// Checa limites de largura dessa linha específica
 			else if (map_y < 0 || map_y >= data->width[map_x])
 				hit = 1;
 			// // Espaço vazio (-1) dentro do mapa
-			// else if (data->real_map.grid[map_x][map_y] == -1)
+			// else if (data->real_map->grid[map_x][map_y] == -1)
 			// 	hit = 1;
 			// Parede normal
-			else if (data->real_map.grid[map_x][map_y] > 0)
+			else if (data->real_map->grid[map_x][map_y] > 0)
 				hit = 1;
 		}
 
@@ -273,10 +273,10 @@ void load_texture(t_data *data)
 {
     int w, h;
 
-    data->tex_test[0].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.no_path, &w, &h);
-    data->tex_test[1].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.so_path, &w, &h);
-    data->tex_test[2].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.we_path, &w, &h);
-    data->tex_test[3].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.ea_path, &w, &h);
+    data->tex_test[0].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->no_path, &w, &h);
+    data->tex_test[1].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->so_path, &w, &h);
+    data->tex_test[2].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->we_path, &w, &h);
+    data->tex_test[3].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->ea_path, &w, &h);
 
     int i = 0;
     while (i < 4)
@@ -296,28 +296,28 @@ void load_texture(t_data *data)
 //     data->player.pos_y = data->player.pos_y + 0.5;
 
 //     // Direção e plano de câmera de acordo com o char
-//     if (data->real_map.player_dir == 'N')
+//     if (data->real_map->player_dir == 'N')
 //     {
 //         data->player.dir_x = -1.0;
 //         data->player.dir_y = 0.0;
 //         data->player.plane_x = 0.0;
 //         data->player.plane_y = 0.66;
 //     }
-//     else if (data->real_map.player_dir == 'S')
+//     else if (data->real_map->player_dir == 'S')
 //     {
 //         data->player.dir_x = 1.0;
 //         data->player.dir_y = 0.0;
 //         data->player.plane_x = 0.0;
 //         data->player.plane_y = -0.66;
 //     }
-//     else if (data->real_map.player_dir == 'E')
+//     else if (data->real_map->player_dir == 'E')
 //     {
 //         data->player.dir_x = 0.0;
 //         data->player.dir_y = 1.0;
 //         data->player.plane_x = 0.66;
 //         data->player.plane_y = 0.0;
 //     }
-//     else if (data->real_map.player_dir == 'W')
+//     else if (data->real_map->player_dir == 'W')
 //     {
 //         data->player.dir_x = 0.0;
 //         data->player.dir_y = -1.0;
@@ -332,25 +332,25 @@ void    find_player(t_data *data)
     int j;
 
     i = 0;
-    while (data->real_map.grid[i] != NULL)
+    while (data->real_map->grid[i] != NULL)
     {
         j = 0;
-        while (data->real_map.grid[i][j] != '\0')
+        while (data->real_map->grid[i][j] != '\0')
         {
-            if (data->real_map.grid[i][j] == 'N' || data->real_map.grid[i][j] == 'S'
-                || data->real_map.grid[i][j] == 'E' || data->real_map.grid[i][j] == 'W')
+            if (data->real_map->grid[i][j] == 'N' || data->real_map->grid[i][j] == 'S'
+                || data->real_map->grid[i][j] == 'E' || data->real_map->grid[i][j] == 'W')
             {
                 data->player.pos_x = i + 0.5;
                 data->player.pos_y = j + 0.5;
-                if (data->real_map.grid[i][j] == 'N')
+                if (data->real_map->grid[i][j] == 'N')
                 { data->player.dir_x = -1.0; data->player.dir_y = 0.0; data->player.plane_x = 0.0; data->player.plane_y = 0.66; }
-                else if (data->real_map.grid[i][j] == 'S')
+                else if (data->real_map->grid[i][j] == 'S')
                 { data->player.dir_x = 1.0; data->player.dir_y = 0.0; data->player.plane_x = 0.0; data->player.plane_y = -0.66; }
-                else if (data->real_map.grid[i][j] == 'E')
+                else if (data->real_map->grid[i][j] == 'E')
                 { data->player.dir_x = 0.0; data->player.dir_y = 1.0; data->player.plane_x = 0.66; data->player.plane_y = 0.0; }
-                else if (data->real_map.grid[i][j] == 'W')
+                else if (data->real_map->grid[i][j] == 'W')
                 { data->player.dir_x = 0.0; data->player.dir_y = -1.0; data->player.plane_x = -0.66; data->player.plane_y = 0.0; }
-                data->real_map.grid[i][j] = '0';
+                data->real_map->grid[i][j] = '0';
             }
             j++;
         }
@@ -367,28 +367,28 @@ int **convert_grid(t_data* data)
     int **int_grid;
 
     i = 0;
-    while (data->real_map.grid[i] != NULL)
+    while (data->real_map->grid[i] != NULL)
         i++;
     int_grid = malloc(sizeof(int *) * (i + 1));
     data->width = malloc(sizeof(int) * (i + 1)); // <-- adiciona isso
     if (!int_grid || !data->width)
         return (NULL);
     i = 0;
-    while (data->real_map.grid[i] != NULL)
+    while (data->real_map->grid[i] != NULL)
     {
         j = 0;
-        while (data->real_map.grid[i][j] != '\0')
+        while (data->real_map->grid[i][j] != '\0')
             j++;
         data->width[i] = j; // <-- salva a largura dessa linha
         int_grid[i] = malloc(sizeof(int) * (j + 1));
         j = 0;
-        while (data->real_map.grid[i][j] != '\0')
+        while (data->real_map->grid[i][j] != '\0')
         {
-            if (data->real_map.grid[i][j] == '1')
+            if (data->real_map->grid[i][j] == '1')
                 int_grid[i][j] = 1;
-            else if (data->real_map.grid[i][j] == '0')
+            else if (data->real_map->grid[i][j] == '0')
                 int_grid[i][j] = 0;
-            else if (data->real_map.grid[i][j] == ' ')
+            else if (data->real_map->grid[i][j] == ' ')
                 int_grid[i][j] = -1;
             else
                 int_grid[i][j] = 0;

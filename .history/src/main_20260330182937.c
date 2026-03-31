@@ -26,11 +26,11 @@ int	key_handler(int keycode, t_data *data)
 	if (keycode == 13)
 	{
 		// Tenta mover no X (Checa se o quadrado destino no mapa é zero)
-		if (data->real_map.grid[(int)(data->player.pos_x + data->player.dir_x * margin)][(int)(data->player.pos_y)] == 0)
+		if (data->real_map->grid[(int)(data->player.pos_x + data->player.dir_x * margin)][(int)(data->player.pos_y)] == 0)
 			data->player.pos_x += data->player.dir_x * move_speed;
 
 		// Tenta mover no Y (Independente do que aconteceu no X)
-		if (data->real_map.grid[(int)(data->player.pos_x)][(int)(data->player.pos_y + data->player.dir_y * margin)] == 0)
+		if (data->real_map->grid[(int)(data->player.pos_x)][(int)(data->player.pos_y + data->player.dir_y * margin)] == 0)
 			data->player.pos_y += data->player.dir_y * move_speed;
 	}
 
@@ -38,10 +38,10 @@ int	key_handler(int keycode, t_data *data)
 	if (keycode == 1)
 	{
 		// Mesma lógica, mas subtraindo a direção
-		if (data->real_map.grid[(int)(data->player.pos_x - data->player.dir_x * margin)][(int)(data->player.pos_y)] == 0)
+		if (data->real_map->grid[(int)(data->player.pos_x - data->player.dir_x * margin)][(int)(data->player.pos_y)] == 0)
 			data->player.pos_x -= data->player.dir_x * move_speed;
 
-		if (data->real_map.grid[(int)(data->player.pos_x)][(int)(data->player.pos_y - data->player.dir_y * margin)] == 0)
+		if (data->real_map->grid[(int)(data->player.pos_x)][(int)(data->player.pos_y - data->player.dir_y * margin)] == 0)
 			data->player.pos_y -= data->player.dir_y * move_speed;
 	}
 
@@ -183,7 +183,7 @@ int	raycasting_loop(t_data *data)
 				map_y += step_y;
 				side = 1;
 			}
-			if (data->real_map.grid[map_x][map_y] > 0)
+			if (data->real_map->grid[map_x][map_y] > 0)
 				hit = 1;
 		}
 
@@ -232,9 +232,9 @@ int	raycasting_loop(t_data *data)
 
 			my_mlx_pixel_put(data, x, y, color);
 		}
-		// if (data->real_map.grid[map_x][map_y] == 1)
+		// if (data->real_map->grid[map_x][map_y] == 1)
 		// 	color = 0xFF8000;
-		// else if (data->real_map.grid[map_x][map_y] == 2)
+		// else if (data->real_map->grid[map_x][map_y] == 2)
 		// 	color = 0x00FFFF;
 		// else
 		// 	color = 0xFF00FF;
@@ -255,10 +255,10 @@ void load_texture(t_data *data)
 {
     int w, h;
 
-    data->tex_test[0].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.no_path, &w, &h);
-    data->tex_test[1].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.so_path, &w, &h);
-    data->tex_test[2].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.we_path, &w, &h);
-    data->tex_test[3].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.ea_path, &w, &h);
+    data->tex_test[0].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->no_path, &w, &h);
+    data->tex_test[1].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->so_path, &w, &h);
+    data->tex_test[2].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->we_path, &w, &h);
+    data->tex_test[3].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->ea_path, &w, &h);
 
     int i = 0;
     while (i < 4)

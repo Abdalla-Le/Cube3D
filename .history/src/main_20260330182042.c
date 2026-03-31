@@ -255,11 +255,11 @@ void load_texture(t_data *data)
 {
     int w, h;
 
-	printf("%s", data->real_map.so_path);
-    data->tex_test[0].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.no_path, &w, &h);
-    data->tex_test[1].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.no_path, &w, &h);
-    data->tex_test[2].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.no_path, &w, &h);
-    data->tex_test[3].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map.no_path, &w, &h);
+	printf("%s", data->real_map->so_path);
+    data->tex_test[0].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->no_path, &w, &h);
+    data->tex_test[1].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->no_path, &w, &h);
+    data->tex_test[2].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->no_path, &w, &h);
+    data->tex_test[3].img_ptr = mlx_xpm_file_to_image(data->mlx, data->real_map->no_path, &w, &h);
 
     int i = 0;
     while (i < 4)

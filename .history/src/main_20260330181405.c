@@ -255,7 +255,7 @@ void load_texture(t_data *data)
 {
     int w, h;
 
-	printf("%s", data->real_map.so_path);
+	printf("%s", data->real_map->so_path);
     data->tex_test[0].img_ptr = mlx_xpm_file_to_image(data->mlx, "textures/stone.xpm", &w, &h);
     data->tex_test[1].img_ptr = mlx_xpm_file_to_image(data->mlx, "textures/teste.xpm", &w, &h);
     data->tex_test[2].img_ptr = mlx_xpm_file_to_image(data->mlx, "textures/stone.xpm",  &w, &h);

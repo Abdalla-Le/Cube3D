@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_20260331132207.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 11:53:29 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 13:22:07 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:57:10 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,11 @@ int	raycasting_loop(t_data *data)
 	// 1. Pinta o fundo (Teto e Chão)
 	for (int i = 0; i < W_HEIGHT / 2; i++)
 		for (int j = 0; j < W_WIDTH; j++)
-			my_mlx_pixel_put(data, j, i, data->real_map.ceil_color);
+			my_mlx_pixel_put(data, j, i, data->real_map->ceil_color);
 
 	for (int i = W_HEIGHT / 2; i < W_HEIGHT; i++)
 		for (int j = 0; j < W_WIDTH; j++)
-			my_mlx_pixel_put(data, j, i, data->real_map.floor_color);
+			my_mlx_pixel_put(data, j, i, data->real_map->floor_color);
 
 	// 2. Loop principal dos raios
 	x = 0;
@@ -258,13 +258,13 @@ void	load_texture(t_data *data)
 	int	i;
 
 	data->tex_test[0].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.no_path, &w, &h);
+			data->mlx, data->real_map->no_path, &w, &h);
 	data->tex_test[1].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.so_path, &w, &h);
+			data->mlx, data->real_map->so_path, &w, &h);
 	data->tex_test[2].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.we_path, &w, &h);
+			data->mlx, data->real_map->we_path, &w, &h);
 	data->tex_test[3].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.ea_path, &w, &h);
+			data->mlx, data->real_map->ea_path, &w, &h);
 	i = 0;
 	while (i < 4)
 	{

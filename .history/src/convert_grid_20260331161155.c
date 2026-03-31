@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert_grid.c                                     :+:      :+:    :+:   */
+/*   convert_grid_20260331161155.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 13:22:42 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 16:11:55 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:57:10 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static void	map_len(t_data *data)
 	i = 0;
 	j = 0;
 	data->map_size[0] = 0;
-	while (data->real_map.grid[i] != NULL)
+	while (data->real_map->grid[i] != NULL)
 	{
 		j = 0;
-		while (data->real_map.grid[i][j] != '\0')
+		while (data->real_map->grid[i][j] != '\0')
 			j++;
 		if (data->map_size[0] < j)
 			data->map_size[0] = j;
@@ -37,9 +37,9 @@ void	set_grids(t_data *data, int i, int **int_grid)
 	int	j;
 
 	j = 0;
-	while (data->real_map.grid[i][j] != '\0')
+	while (data->real_map->grid[i][j] != '\0')
 	{
-		if (data->real_map.grid[i][j] == '0')
+		if (data->real_map->grid[i][j] == '0')
 			int_grid[i][j++] = 0;
 		else
 			int_grid[i][j++] = 1;
@@ -57,7 +57,7 @@ int	**convert_grid(t_data *data)
 	if (!int_grid)
 		return (NULL);
 	i = 0;
-	while (data->real_map.grid[i] != NULL)
+	while (data->real_map->grid[i] != NULL)
 	{
 		int_grid[i] = malloc(sizeof(int) * data->map_size[0]);
 		if (!int_grid[i])

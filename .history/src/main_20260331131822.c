@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_20260331131822.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 11:53:29 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 13:18:22 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:57:10 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,11 @@ int	raycasting_loop(t_data *data)
 	// 1. Pinta o fundo (Teto e Chão)
 	for (int i = 0; i < W_HEIGHT / 2; i++)
 		for (int j = 0; j < W_WIDTH; j++)
-			my_mlx_pixel_put(data, j, i, data->real_map.ceil_color); // Teto Azul Céu
+			my_mlx_pixel_put(data, j, i, data->real_map->ceil_color); // Teto Azul Céu
 
 	for (int i = W_HEIGHT / 2; i < W_HEIGHT; i++)
 		for (int j = 0; j < W_WIDTH; j++)
-			my_mlx_pixel_put(data, j, i, data->real_map.floor_color); // Chão Cinza Escuro
+			my_mlx_pixel_put(data, j, i, data->real_map->floor_color); // Chão Cinza Escuro
 
 	// 2. Loop principal dos raios
 	x = 0;
@@ -258,13 +258,13 @@ void	load_texture(t_data *data)
 	int	i;
 
 	data->tex_test[0].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.no_path, &w, &h);
+			data->mlx, data->real_map->no_path, &w, &h);
 	data->tex_test[1].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.so_path, &w, &h);
+			data->mlx, data->real_map->so_path, &w, &h);
 	data->tex_test[2].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.we_path, &w, &h);
+			data->mlx, data->real_map->we_path, &w, &h);
 	data->tex_test[3].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.ea_path, &w, &h);
+			data->mlx, data->real_map->ea_path, &w, &h);
 	i = 0;
 	while (i < 4)
 	{
@@ -330,21 +330,21 @@ void	find_player(t_data *data)
 	int	j;
 
 	i = 0;
-	while (data->real_map.grid[i] != NULL)
+	while (data->real_map->grid[i] != NULL)
 	{
 		j = 0;
-		while (data->real_map.grid[i][j] != '\0')
+		while (data->real_map->grid[i][j] != '\0')
 		{
-			if (data->real_map.grid[i][j] == 'N'
-				|| data->real_map.grid[i][j] == 'S'
-				|| data->real_map.grid[i][j] == 'E'
-				|| data->real_map.grid[i][j] == 'W')
+			if (data->real_map->grid[i][j] == 'N'
+				|| data->real_map->grid[i][j] == 'S'
+				|| data->real_map->grid[i][j] == 'E'
+				|| data->real_map->grid[i][j] == 'W')
 			{
 				data->player.pos_x = i + 0.5;
 				data->player.pos_y = j + 0.5;
-				find_dir(data, data->real_map.grid[i][j]);
-				find_plane(data, data->real_map.grid[i][j]);
-				data->real_map.grid[i][j] = '0';
+				find_dir(data, data->real_map->grid[i][j]);
+				find_plane(data, data->real_map->grid[i][j]);
+				data->real_map->grid[i][j] = '0';
 			}
 			j++;
 		}
@@ -360,10 +360,10 @@ void	map_len(t_data *data)
 	i = 0;
 	j = 0;
 	data->map_size[0] = 0;
-	while (data->real_map.grid[i] != NULL)
+	while (data->real_map->grid[i] != NULL)
 	{
 		j = 0;
-		while (data->real_map.grid[i][j] != '\0')
+		while (data->real_map->grid[i][j] != '\0')
 			j++;
 		if (data->map_size[0] < j)
 			data->map_size[0] = j;
@@ -383,14 +383,14 @@ int	**convert_grid(t_data *data)
 	if (!int_grid)
 		return (NULL);
 	i = 0;
-	while (data->real_map.grid[i] != NULL)
+	while (data->real_map->grid[i] != NULL)
 	{
 		int_grid[i] = malloc(sizeof(int) * data->map_size[0]);
 		j = 0;
-		while (data->real_map.grid[i][j] != '\0')
+		while (data->real_map->grid[i][j] != '\0')
 		{
-			if (data->real_map.grid[i][j] == '1'
-				|| data->real_map.grid[i][j] == ' ')
+			if (data->real_map->grid[i][j] == '1'
+				|| data->real_map->grid[i][j] == ' ')
 				int_grid[i][j++] = 1;
 			else
 				int_grid[i][j++] = 0;
