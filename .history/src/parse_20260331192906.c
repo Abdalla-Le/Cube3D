@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:31:59 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/03/31 19:30:45 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 19:29:06 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ static int	process_data(int fd, t_map *map_data, t_gnl **lst_temp)
 	if (!parse_file(fd, map_data, lst_temp))
 	{
 		close(fd);
-		free_lst(*lst_temp);
+
 		return (0);
 	}
 	close(fd);
 	map_data->grid = fill_matrix(lst_temp, map_data);
-	free_lst(*lst_temp);
 	if (!map_data->grid)
 		return (0);
 	return (1);

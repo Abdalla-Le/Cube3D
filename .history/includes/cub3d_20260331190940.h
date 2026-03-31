@@ -12,7 +12,7 @@
 #define TEX_W 64
 #define TEX_H 64
 
-#ifdef __APPLE__
+#ifdef __linux__
 
 #include "../mlx_mac/mlx.h"
 #define KEY_W      13

@@ -12,7 +12,18 @@
 #define TEX_W 64
 #define TEX_H 64
 
-#ifdef __APPLE__
+#ifdef __linux__
+
+#include "../mlx_linux/mlx.h"
+#define KEY_W      119
+#define KEY_A      97
+#define KEY_S      115
+#define KEY_D      100
+#define KEY_LEFT   65361
+#define KEY_RIGHT  65363
+#define KEY_ESC    65363
+
+#else
 
 #include "../mlx_mac/mlx.h"
 #define KEY_W      13
@@ -23,16 +34,6 @@
 #define KEY_RIGHT  124
 #define KEY_ESC    53
 
-#else
-
-#include "../mlx_linux/mlx.h"
-#define KEY_W      119
-#define KEY_A      97
-#define KEY_S      115
-#define KEY_D      100
-#define KEY_LEFT   65361
-#define KEY_RIGHT  65363
-#define KEY_ESC    65363
 
 #endif
 
