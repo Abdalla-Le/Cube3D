@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 11:53:29 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 21:01:53 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:31:46 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	init_data(t_data *data, t_map *map)
 			&data->img.bpp,
 			&data->img.line_len,
 			&data->img.endian);
-	data->real_map = *map;
-	data->map_to_free = map;
+	data->real_map = map;
 	data->map = convert_grid(data);
 }
 

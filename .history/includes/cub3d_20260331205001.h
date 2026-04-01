@@ -62,7 +62,6 @@ typedef struct s_data {
     t_player    player;
     int**       map;
     t_map       real_map;
-    t_map       *map_to_free;
     int         map_size[2];
 
 } t_data;

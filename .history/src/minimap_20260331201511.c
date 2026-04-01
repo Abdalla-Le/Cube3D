@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 18:14:51 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 20:18:29 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:15:11 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void    draw_minimap(t_data *data)
     int i;
     int j;
     int color;
+
+    printf("height: %d\n", data->real_map->height);
 
     i = 0;
     while (i < data->map_size[1])

@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 13:40:00 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 20:50:23 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:38:00 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	paint(t_data *data)
 		j = 0;
 		while (j < W_WIDTH)
 		{
-			my_mlx_pixel_put(data, j, i, data->real_map.ceil_color);
+			my_mlx_pixel_put(data, j, i, data->real_map->ceil_color);
 			j++;
 		}
 		i++;
@@ -34,7 +34,7 @@ static void	paint(t_data *data)
 		j = 0;
 		while (j < W_WIDTH)
 		{
-			my_mlx_pixel_put(data, j, i, data->real_map.floor_color);
+			my_mlx_pixel_put(data, j, i, data->real_map->floor_color);
 			j++;
 		}
 		i++;

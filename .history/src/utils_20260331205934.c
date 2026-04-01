@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 15:39:09 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 21:02:10 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:59:34 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	close_window(t_data *data)
 			free(data->map[i++]);
 		free(data->map);
 	}
-	free_map_fields(data->map_to_free);
+	free_map_fields(data->real_map);
 	mlx_destroy_window(data->mlx, data->win);
 	 #ifndef __APPLE__
 	 	mlx_destroy_display(data->mlx);

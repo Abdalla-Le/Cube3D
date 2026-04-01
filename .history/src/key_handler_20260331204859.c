@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 15:04:24 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 20:59:16 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:48:59 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	key_handler(int keycode, t_data *data)
 
 	move_speed = 0.5;
 	rot_speed = 0.08;
-	margin = 1.0;
+	margin = 0.2;
 	if (keycode == KEY_ESC)
 		close_window(data);
 	if (keycode == KEY_W)

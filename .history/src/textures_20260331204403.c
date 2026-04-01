@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 13:24:56 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 20:50:23 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 20:44:03 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	load_texture(t_data *data)
 	int	i;
 
 	data->tex_test[0].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.no_path, &w, &h);
+			data->mlx, data->real_map->no_path, &w, &h);
 	data->tex_test[1].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.so_path, &w, &h);
+			data->mlx, data->real_map->so_path, &w, &h);
 	data->tex_test[2].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.we_path, &w, &h);
+			data->mlx, data->real_map->we_path, &w, &h);
 	data->tex_test[3].img_ptr = mlx_xpm_file_to_image(
-			data->mlx, data->real_map.ea_path, &w, &h);
+			data->mlx, data->real_map->ea_path, &w, &h);
 	i = 0;
 	while (i < 4)
 	{
