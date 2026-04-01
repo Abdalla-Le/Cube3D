@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "mlx_int.h"
+#ifndef MLX_NEW_WINDOW_H
+# define MLX_NEW_WINDOW_H
 
 @interface NSWindowEvent : NSWindow
 {

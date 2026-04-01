@@ -1,4 +1,4 @@
-# --- NAMES ---
+# --- TARGET ---
 NAME = cub3D
 
 # --- OS DETECTION ---
@@ -19,7 +19,7 @@ INC_DIR = includes
 LIB_DIR = lib
 LIBFT   = $(LIB_DIR)/libft.a
 
-# --- FILES ---
+# --- SOURCES ---
 SRC_FILES = main.c \
             stdin_parse.c \
             parse_map.c \
@@ -43,9 +43,9 @@ SRC_FILES = main.c \
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
-# --- COMPILER & FLAGS ---
+# --- COMPILER ---
 CC       = cc
-CFLAGS   = -Wall -Wextra -Werror -g3 -I$(INC_DIR) -I$(MLX_DIR)
+CFLAGS   = -Wall -Wextra -Werror -I$(INC_DIR) -I$(MLX_DIR)
 CPPFLAGS = -I. -I$(LIB_DIR)
 LDFLAGS  = -L$(LIB_DIR) -lft
 
@@ -54,7 +54,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "Compiling MiniLibX..."
-	@make -C $(MLX_DIR) > /dev/null 2>&1
+	@$(MAKE) -C $(MLX_DIR) > /dev/null 2>&1
 	@echo "Linking $(NAME)..."
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(MLX_FLAGS) -o $(NAME)
 	@echo "Done! ./$(NAME) is ready."
@@ -70,7 +70,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	@echo "Cleaning object files..."
 	@rm -rf $(OBJ_DIR)
-	@make clean -C $(MLX_DIR) > /dev/null 2>&1 || true
+	@$(MAKE) clean -C $(MLX_DIR) > /dev/null 2>&1 || true
 
 fclean: clean
 	@echo "Removing executable..."

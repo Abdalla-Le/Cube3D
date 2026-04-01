@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 21:22:52 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 21:42:52 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/04/01 15:11:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "parse.h"
-# include <math.h> // Precisa dessa para as contas matematicas
+# include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
 

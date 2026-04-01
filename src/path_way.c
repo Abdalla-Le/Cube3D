@@ -65,6 +65,19 @@ static int	find_color(char *line, t_map *file)
 	return (1);
 }
 
+static int	set_texture(char **slot, char *line)
+{
+	if (*slot)
+	{
+		printf("Error\nTexture defined more than once.\n");
+		return (0);
+	}
+	*slot = get_clean_path(line);
+	if (!*slot)
+		return (0);
+	return (1);
+}
+
 static int	find_way(char *line, t_map *file)
 {
 	int	i;
@@ -73,16 +86,14 @@ static int	find_way(char *line, t_map *file)
 	while (line[i] && line[i] == ' ')
 		i++;
 	if (line[i] == 'N' && line[i + 1] == 'O')
-		file->no_path = get_clean_path(line);
+		return (set_texture(&file->no_path, line));
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		file->so_path = get_clean_path(line);
+		return (set_texture(&file->so_path, line));
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		file->we_path = get_clean_path(line);
+		return (set_texture(&file->we_path, line));
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		file->ea_path = get_clean_path(line);
-	else
-		return (0);
-	return (1);
+		return (set_texture(&file->ea_path, line));
+	return (-1);
 }
 
 // int	path_way(int fd, t_map *file, char *line)
@@ -105,6 +116,8 @@ int	path_way(int fd, t_map *file, char *line)
 	res_way = find_way(line, file);
 	if (res_way == 1)
 		return (1);
+	if (res_way == 0)
+		return (0);
 	res_color = find_color(line, file);
 	if (res_color == 1)
 		return (1);

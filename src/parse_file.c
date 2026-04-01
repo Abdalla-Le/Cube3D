@@ -56,28 +56,31 @@ static int	handle_map_line(t_map *file, t_gnl **lst, char *line)
 	return (0);
 }
 
+static int	process_line(char *line, t_map *file, t_gnl **lst, int fd)
+{
+	int		i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[i] >= 65 && line[i] <= 90)
+		return (path_way(fd, file, line));
+	if (line[i] >= '0' && line[i] <= '9')
+		return (handle_map_line(file, lst, line));
+	return (1);
+}
+
 int	parse_file(int fd, t_map *file, t_gnl **lst)
 {
 	char	*line;
-	int		i;
+	int		res;
 
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		i = 0;
-		while (line[i] && line[i] == ' ')
-			i++;
-		if (line[i] >= 65 && line[i] <= 90)
-			path_way(fd, file, line);
-		else if (line[i] >= '0' && line[i] <= '9')
-		{
-			if (!handle_map_line(file, lst, line))
-			{
-				free(line);
-				return (0);
-			}
-		}
-		i = 0;
+		res = process_line(line, file, lst, fd);
+		if (!res)
+			return (free(line), 0);
 		free(line);
 		line = get_next_line(fd);
 	}

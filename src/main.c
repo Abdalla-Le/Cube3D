@@ -26,14 +26,26 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	init_data(t_data *data, t_map *map)
 {
+	int	i;
+
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, W_WIDTH, W_HEIGHT, "Cub3D Leticia");
+	data->win = mlx_new_window(data->mlx, W_WIDTH, W_HEIGHT, "cub3D");
 	data->img.img_ptr = mlx_new_image(data->mlx, W_WIDTH, W_HEIGHT);
 	data->img.addr = mlx_get_data_addr(
 			data->img.img_ptr,
 			&data->img.bpp,
 			&data->img.line_len,
 			&data->img.endian);
+	i = 0;
+	while (i < 4)
+	{
+		data->tex_test[i].img_ptr = NULL;
+		data->tex_test[i].addr = NULL;
+		data->tex_test[i].bpp = 0;
+		data->tex_test[i].line_len = 0;
+		data->tex_test[i].endian = 0;
+		i++;
+	}
 	data->real_map = *map;
 	data->map_to_free = map;
 	data->map = convert_grid(data);
@@ -46,7 +58,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		printf("Error\nUso correto: ./cub3D <mapa.cub>\n");
+		printf("Error\nUsage: ./cub3D <map.cub>\n");
 		return (1);
 	}
 	map = init_parse(av[1]);

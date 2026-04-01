@@ -12,6 +12,22 @@
 
 #include "../includes/cub3d.h"
 
+#ifdef __APPLE__
+
+static void	destroy_display(void *mlx)
+{
+	(void)mlx;
+}
+#else
+
+static void	destroy_display(void *mlx)
+{
+	if (mlx)
+		mlx_destroy_display(mlx);
+}
+
+#endif
+
 int	close_window(t_data *data)
 {
 	int	i;
@@ -25,7 +41,17 @@ int	close_window(t_data *data)
 	}
 	free_map_fields(&data->real_map);
 	free(data->map_to_free);
+	i = 0;
+	while (i < 4)
+	{
+		if (data->tex_test[i].img_ptr)
+			mlx_destroy_image(data->mlx, data->tex_test[i].img_ptr);
+		i++;
+	}
+	if (data->img.img_ptr)
+		mlx_destroy_image(data->mlx, data->img.img_ptr);
 	mlx_destroy_window(data->mlx, data->win);
+	destroy_display(data->mlx);
 	free(data->mlx);
 	exit(0);
 	return (0);

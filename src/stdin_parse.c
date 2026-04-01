@@ -19,9 +19,9 @@ static int	check_name(char *file_name)
 	aux = ft_strchr(file_name, '.');
 	if (!aux || my_strcmp(aux, ".cub") != 0)
 	{
-		perror(
-			"Error\nThe map file must end in \".cub\"\nExemple: \"file.cub\""
-			);
+		ft_putendl_fd("Error", 2);
+		ft_putendl_fd("The map file must end in \".cub\"", 2);
+		ft_putendl_fd("Example: \"file.cub\"", 2);
 		return (0);
 	}
 	return (1);
@@ -41,7 +41,10 @@ int	stdin_parse(char *file_name)
 {
 	int	fd;
 
+	if (!check_name(file_name))
+		return (-1);
 	fd = open_file(file_name);
-	check_name(file_name);
+	if (fd < 0)
+		return (-1);
 	return (fd);
 }
