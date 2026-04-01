@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:20:53 by ancarlos          #+#    #+#             */
-/*   Updated: 2026/03/31 21:12:31 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 21:12:18 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_map_fields(t_map *map)
 
 void	free_lst(t_gnl *lst)
 {
-	t_gnl	*temp;
+	t_gnl *temp;
 
 	while (lst != NULL)
 	{

@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/31 21:14:36 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 21:14:39 by eteofilo         ###   ########.fr       */
+/*   Created: 2026/03/31 21:12:42 by eteofilo          #+#    #+#             */
+/*   Updated: 2026/03/31 21:12:55 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	draw_tile(t_data *data, t_tile *t, int i, int j)
+static void	draw_tile(t_data *data, int i, int j, int tile, int offset_x, int offset_y)
 {
 	int	color;
 	int	dy;
@@ -25,20 +25,20 @@ static void	draw_tile(t_data *data, t_tile *t, int i, int j)
 	else
 		color = 0x000000;
 	dy = 0;
-	while (dy < t->tile - 1)
+	while (dy < tile - 1)
 	{
 		dx = 0;
-		while (dx < t->tile - 1)
+		while (dx < tile - 1)
 		{
-			my_mlx_pixel_put(data, t->offset_x + j * t->tile + dx,
-				t->offset_y + i * t->tile + dy, color);
+			my_mlx_pixel_put(data, offset_x + j * tile + dx,
+				offset_y + i * tile + dy, color);
 			dx++;
 		}
 		dy++;
 	}
 }
 
-static void	draw_grid(t_data *data, t_tile *t)
+static void	draw_grid(t_data *data, int tile, int offset_x, int offset_y)
 {
 	int	i;
 	int	j;
@@ -49,7 +49,7 @@ static void	draw_grid(t_data *data, t_tile *t)
 		j = 0;
 		while (j < data->map_size[0])
 		{
-			draw_tile(data, t, i, j);
+			draw_tile(data, i, j, tile, offset_x, offset_y);
 			j++;
 		}
 		i++;
@@ -91,16 +91,18 @@ static void	draw_direction(t_data *data, int px, int py, int tile)
 
 void	draw_minimap(t_data *data)
 {
-	t_tile	t;
-	int		px;
-	int		py;
+	int	tile;
+	int	offset_x;
+	int	offset_y;
+	int	px;
+	int	py;
 
-	t.tile = 6;
-	t.offset_x = 10;
-	t.offset_y = 10;
-	draw_grid(data, &t);
-	px = t.offset_x + (int)(data->player.pos_y * t.tile);
-	py = t.offset_y + (int)(data->player.pos_x * t.tile);
+	tile = 6;
+	offset_x = 10;
+	offset_y = 10;
+	draw_grid(data, tile, offset_x, offset_y);
+	px = offset_x + (int)(data->player.pos_y * tile);
+	py = offset_y + (int)(data->player.pos_x * tile);
 	draw_player(data, px, py);
-	draw_direction(data, px, py, t.tile);
+	draw_direction(data, px, py, tile);
 }

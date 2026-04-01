@@ -6,7 +6,7 @@
 /*   By: eteofilo <eteofilo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 21:23:02 by eteofilo          #+#    #+#             */
-/*   Updated: 2026/03/31 21:45:09 by eteofilo         ###   ########.fr       */
+/*   Updated: 2026/03/31 21:45:01 by eteofilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 
 typedef struct s_map
 {
-	char			**grid;
-	int				width;
-	int				height;
-	int				p_x;
-	int				p_y;
-	char			p_dir;
-	char			*no_path;
-	char			*so_path;
-	char			*we_path;
-	char			*ea_path;
-	int				floor_color;
-	int				ceil_color;
+	char **grid;
+	int width;
+	int height;
+	int p_x;
+	int p_y;
+	char p_dir;
+	char *no_path;
+	char *so_path;
+	char *we_path;
+	char *ea_path;
+	int floor_color;
+	int ceil_color;
 }					t_map;
 
 typedef struct s_gnl
